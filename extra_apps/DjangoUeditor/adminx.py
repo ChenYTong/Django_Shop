@@ -3,11 +3,13 @@
 #DjangoUeditor Xadmin plugin
 
 import xadmin
-from django.db.models import TextField
-from xadmin.views import BaseAdminPlugin, ModelFormAdminView, DetailAdminView
-from DjangoUeditor.models import UEditorField
 from DjangoUeditor.widgets import UEditorWidget
 from django.conf import settings
+from django.db.models import TextField
+from xadmin.views import BaseAdminPlugin, ModelFormAdminView, DetailAdminView
+
+from extra_apps.DjangoUeditor.models import UEditorField
+
 
 class XadminUEditorWidget(UEditorWidget):
     def __init__(self,**kwargs):

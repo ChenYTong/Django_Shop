@@ -1,6 +1,8 @@
 from datetime import datetime
+
 from django.db import models
-from DjangoUeditor.models import UEditorField
+
+from extra_apps.DjangoUeditor.models import UEditorField
 
 
 class GoodsCategory(models.Model):
