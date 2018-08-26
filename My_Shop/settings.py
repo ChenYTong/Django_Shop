@@ -48,13 +48,16 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'DjangoUeditor',
+    'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -92,6 +95,7 @@ DATABASES = {
         'PASSWORD': 'mysql',
         'HOST': 'localhost',
         'PORT': 3306,
+        'OPTIONS': {'init_command': 'SET default_storage_engine=INNODB;'},
     }
 }
 
@@ -134,7 +138,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
 AUTH_USER_MODEL = 'users.UserProfile'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# 分页,PAGE_SIZE表示每页10个数据 方法1
+# REST_FRAMEWORK = {
+#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+#     'PAGE_SIZE': 10
+# }
+
+CORS_ORIGIN_ALLOW_ALL = True
