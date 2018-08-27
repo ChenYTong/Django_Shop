@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
-
+import datetime
 import os
 import sys
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'DjangoUeditor',
     'django_filters',
     'corsheaders',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -147,10 +148,30 @@ AUTH_USER_MODEL = 'users.UserProfile'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
-# 分页,PAGE_SIZE表示每页10个数据 方法1
-# REST_FRAMEWORK = {
-#     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-#     'PAGE_SIZE': 10
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.TokenAuthentication'
+        # 验证用户的token，返回一个user
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    )
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=20),
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',
+}
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',
+
+)
+
+# 手机正则
+REGEX_MOBILE = '^1[358]\d{9}$|^147\d{8}$|^176\d{8}$'
+
+# 云片网apikey
+APIKEY = 'dc069397bd81a484528a61e6729db475'
