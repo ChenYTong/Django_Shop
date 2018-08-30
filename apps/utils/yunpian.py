@@ -21,4 +21,4 @@ class YunPian(object):
 
 if __name__ == '__main__':
     yun_pian = YunPian('dc069397bd81a484528a61e6729db475')
-    yun_pian.send_sms('2018', '')
+    yun_pian.send_sms('2018', '18912341234')
