@@ -32,6 +32,12 @@ class SmsSerializer(serializers.Serializer):
         return mobile
 
 
+class UserDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('name', 'gender', 'birthday', 'email', 'mobile')
+
+
 class UserRegSerializer(serializers.Serializer):
 
     code = serializers.CharField(required=True, write_only=True, max_length=4, min_length=4, label='验证码',
@@ -41,10 +47,10 @@ class UserRegSerializer(serializers.Serializer):
                                      "max_length": "验证码格式错误",
                                      "min_length": "验证码格式错误"
                                  }, help_text='验证码')
-    username = serializers.CharField(label='用户名', required=True, allow_blank=False,
+    username = serializers.CharField(label='用户名', required=True, allow_blank=False, help_text='用户名',
                                      validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
     # mobile = models.CharField(null=True, blank=True, max_length=11)
-    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True)
+    password = serializers.CharField(style={'input_type': 'password'}, label='密码', write_only=True, help_text='密码')
     # 不使用这个 使用信号量, 把数据库的密码转变成密文
     # def create(self, validated_data):
     #     user = super(UserRegSerializer, self).create(validated_data=validated_data)

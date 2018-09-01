@@ -6,7 +6,6 @@ from rest_framework import mixins
 
 from goods.filters import GoodsFilter
 from goods.models import Goods, GoodsCategory
-
 from goods.serializers import CategorySerializer, GoodsSerializer
 from rest_framework import filters
 
@@ -35,10 +34,10 @@ class GoodsPagination(PageNumberPagination):
 
 
 # class GoddsListView(generics.ListAPIView):
-class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+class GoodsListViewSet(mixins.ListModelMixin, viewsets.GenericViewSet, mixins.RetrieveModelMixin):
     # 商品列表页
     queryset = Goods.objects.all()
-    authentication_classes = (TokenAuthentication,)
+    # authentication_classes = (TokenAuthentication,)
     serializer_class = GoodsSerializer
     pagination_class = GoodsPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
