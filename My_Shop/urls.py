@@ -23,7 +23,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 from My_Shop.settings import MEDIA_ROOT
 from goods.views import GoodsListViewSet, CategoryViewset
-from user_operation.views import UserFavViewset
+from user_operation.views import UserFavViewset, LeavingMessageViewset, AddressViewset
 from users.views import SmsCodeViewset, UserViewset
 
 router = DefaultRouter()
@@ -36,6 +36,10 @@ router.register(r'codes', SmsCodeViewset, base_name='codes')
 router.register(r'users', UserViewset, base_name='users')
 
 router.register(r'userfavs', UserFavViewset, base_name='userfavs')
+
+router.register(r'messages', LeavingMessageViewset, base_name='messages')
+
+router.register(r'address', AddressViewset, base_name='address')
 
 goods_list = GoodsListViewSet.as_view({
     'get': 'list',
