@@ -151,11 +151,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
-        # 'rest_framework.authentication.TokenAuthentication'
-        # 验证用户的token，返回一个user
-        # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    )
+        'rest_framework.authentication.SessionAuthentication'),
+    # 限速设置
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle',  # 未登陆用户
+        'rest_framework.throttling.UserRateThrottle'  # 登陆用户
+    ),
+
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '100/day',
+        'user': '1000/day'
+    }
+}
+
+REST_FRAMEWORK_EXTENSIONS = {
+    'DEFAULT_CACHE_RESPONSE_TIMEOUT': 60*15
 }
 
 JWT_AUTH = {
@@ -175,3 +185,14 @@ REGEX_MOBILE = '^1[358]\d{9}$|^147\d{8}$|^176\d{8}$'
 
 # 云片网apikey
 APIKEY = 'dc069397bd81a484528a61e6729db475'
+
+# 配置redis缓存
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis: //127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

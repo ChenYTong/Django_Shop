@@ -5,7 +5,7 @@ from rest_framework import serializers
 
 from goods.models import Goods
 from goods.serializers import GoodsSerializer
-from trade.models import ShoppingCart, OrderInfo
+from trade.models import ShoppingCart, OrderInfo, OrderGoods
 
 
 class ShopCartDetailSerializer(serializers.ModelSerializer):
@@ -92,3 +92,22 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderInfo
         fields = '__all__'
+
+
+# 订单中的商品
+class OrderGoodsSerialzier(serializers.ModelSerializer):
+    goods = GoodsSerializer(many=False)
+
+    class Meta:
+        model = OrderGoods
+        fields = "__all__"
+
+
+# 订单商品信息
+# goods字段需要嵌套一个OrderGoodsSerializer
+class OrderDetailSerializer(serializers.ModelSerializer):
+    goods = OrderGoodsSerialzier(many=True)
+
+    class Meta:
+        model = OrderInfo
+        fields = "__all__"

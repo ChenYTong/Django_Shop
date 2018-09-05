@@ -99,7 +99,7 @@ class UserViewset(CreateModelMixin, mixins.RetrieveModelMixin,
             return []
         return []
 
-    def crate(self, request, *arg, **kwargs):
+    def create(self, request, *arg, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = self.perform_create(serializer)

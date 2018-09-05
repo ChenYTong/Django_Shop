@@ -123,7 +123,7 @@ class IndexAd(models.Model):
     """
     商品广告
     """
-    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, related_name='category',verbose_name="商品类目")
+    category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, related_name='category', verbose_name="商品类目")
     goods =models.ForeignKey(Goods, on_delete=models.CASCADE, related_name='goods')
 
     class Meta:
