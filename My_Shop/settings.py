@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'rest_framework.authtoken',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -177,7 +180,10 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
-
+    'social_core.backends.qq.QQOAuth2',
+    'social_core.backends.weibo.WeiboOAuth2',
+    'social_core.backends.weixin.WeixinOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 )
 
 # 手机正则
@@ -196,3 +202,18 @@ CACHES = {
         }
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.weixin.WeixinOAuth2',         # 使用微信登录
+    'social_core.backends.qq.QQOAuth2',                 # 使用QQ登录
+    'social_core.backends.weibo.WeiboOAuth2',
+    'django.contrib.auth.backends.ModelBackend',        # 指定django的ModelBackend类
+)
+
+# 配置微博开放平台授权
+# SOCIAL_AUTH_要使用登录模块的名称大小_KEY，其他如QQ相同
+SOCIAL_AUTH_WEIBO_KEY = '2176707864'
+SOCIAL_AUTH_WEIBO_SECRET = 'b6cab58f5d4179eb4b1038a3f232fcce'
+
+# 登录成功后跳转页面
+SOCIAL_AUTH_LOGIN_REDIRECT_URL = '/index/'

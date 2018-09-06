@@ -15,6 +15,7 @@ Including another URLconf
 """
 import xadmin
 from django.conf.urls import url, include
+from django.views.generic import TemplateView
 from django.views.static import serve
 from rest_framework.authtoken import views
 from rest_framework.documentation import include_docs_urls
@@ -64,5 +65,7 @@ urlpatterns = [
     # drf自带的token认证模式
     url(r'^api-token-auth/', views.obtain_auth_token),
     # jwt的认证接口
-    url(r'^login/', obtain_jwt_token),
+    url(r'^login/$', obtain_jwt_token),
+    url('', include('social_django.urls', namespace='social')),
+    url(r'^index/', TemplateView.as_view(template_name='index.html'), name='index')
 ]
