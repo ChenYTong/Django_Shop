@@ -2,7 +2,7 @@ amqp==2.1.4
 appdirs==1.4.3
 billiard==3.5.0.2
 captcha==0.2.4
-celery==4.0.2
+celery==5.2.2
 certifi==2018.8.13
 chardet==3.0.4
 coreapi==2.3.3
